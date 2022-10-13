@@ -1,6 +1,17 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
+import {
+  AppBar,
+  Badge,
+  Box,
+  IconButton,
+  List,
+  ListItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
+import { NavLink } from "react-router-dom";
 
 interface Props {
   darkMode: boolean;
@@ -8,7 +19,7 @@ interface Props {
 }
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
-  const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  const DarkModeSwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
     padding: 7,
@@ -55,12 +66,65 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
       borderRadius: 20 / 2,
     },
   }));
+  const middleLinks = [
+    { title: "Catalog", path: "/catalog" },
+    { title: "About", path: "/about" },
+    { title: "Contact", path: "/contact" },
+  ];
+  const rightLinks = [
+    { title: "Login", path: "/login" },
+    { title: "Register", path: "/register" },
+  ];
+  const navStyles = {
+    color: "inherit",
+    textDecoration: "none",
+    typography: "h6",
+    "&:hover": { color: "grey.500" },
+    "&.active": { color: "text.secondary" },
+  };
 
   return (
     <AppBar position="static" sx={{ mb: 4 }}>
-      <Toolbar>
-        <Typography variant="h6">Shop app</Typography>
-        <MaterialUISwitch checked={darkMode} onChange={handleThemeChange} />
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Box display="flex" alignItems="center">
+          <Typography
+            variant="h6"
+            component={NavLink}
+            to="/"
+            end
+            sx={navStyles}
+          >
+            SHOP APP
+          </Typography>
+          <DarkModeSwitch checked={darkMode} onChange={handleThemeChange} />
+        </Box>
+        <List sx={{ display: "flex" }}>
+          {middleLinks.map(({ title, path }) => (
+            <ListItem key={path} component={NavLink} to={path} sx={navStyles}>
+              {title}
+            </ListItem>
+          ))}
+        </List>
+        <Box display="flex" alignItems="center">
+          <IconButton size="large" sx={{ color: "inherit" }}>
+            <Badge badgeContent={4} color="secondary">
+              <ShoppingCart />
+            </Badge>
+          </IconButton>
+          <List sx={{ display: "flex" }}>
+            {rightLinks.map(({ title, path }) => (
+              <ListItem key={path} component={NavLink} to={path} sx={navStyles}>
+                {title}
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Toolbar>
     </AppBar>
   );
