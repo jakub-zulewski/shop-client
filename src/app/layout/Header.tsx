@@ -70,6 +70,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
     { title: "Catalog", path: "/catalog" },
     { title: "About", path: "/about" },
     { title: "Contact", path: "/contact" },
+    { title: "Errors", path: "/test-errors" },
   ];
   const rightLinks = [
     { title: "Login", path: "/login" },
