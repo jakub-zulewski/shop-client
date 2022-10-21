@@ -9,6 +9,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { StoreProvider } from "./app/context/StoreContext";
 
 export const history = createBrowserHistory();
 
@@ -18,7 +19,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HistoryRouter history={history}>
-      <App />
+      <StoreProvider>
+        <App />
+      </StoreProvider>
     </HistoryRouter>
   </React.StrictMode>
 );

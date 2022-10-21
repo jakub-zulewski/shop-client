@@ -12,6 +12,7 @@ import {
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import { NavLink } from "react-router-dom";
+import { useStoreContext } from "../context/StoreContext";
 
 interface Props {
   darkMode: boolean;
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export default function Header({ darkMode, handleThemeChange }: Props) {
+  const { basket } = useStoreContext();
+  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   const DarkModeSwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -113,8 +116,13 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
           ))}
         </List>
         <Box display="flex" alignItems="center">
-          <IconButton size="large" sx={{ color: "inherit" }}>
-            <Badge badgeContent={4} color="secondary">
+          <IconButton
+            component={NavLink}
+            to={"/basket"}
+            size="large"
+            sx={{ color: "inherit" }}
+          >
+            <Badge badgeContent={itemCount} color="secondary">
               <ShoppingCart />
             </Badge>
           </IconButton>
